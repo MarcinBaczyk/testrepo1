@@ -14,7 +14,8 @@ Jeśli API zmieni adres lub wymaga innego endpointu, użyj parametru `--pse-url`
 
 Jeśli widzisz błąd podobny do:
 `https://www.pse.pl/getcsv/-/export/csv/PL_RDN/data/YYYYMMDD/YYYYMMDD`
-(gdzie `YYYYMMDD` oznacza format daty, np. `20240101`),
+(gdzie `YYYYMMDD` oznacza format daty, np. `20240101`; przykładowy adres:
+`https://www.pse.pl/getcsv/-/export/csv/PL_RDN/data/20240101/20240131`),
 oznacza to, że używany jest legacy endpoint CSV (często już niedostępny) lub
 zakres dat obejmuje przyszłość. W takiej sytuacji użyj oficjalnego API PSE
 podanego powyżej i upewnij się, że daty mieszczą się w dostępnej historii.
