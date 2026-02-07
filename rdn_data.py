@@ -41,7 +41,7 @@ def fetch_pse_prices(date_range: DateRange, base_url: str = DEFAULT_PSE_URL) -> 
     }
     try:
         response = requests.get(base_url, params=params, timeout=DEFAULT_TIMEOUT)
-    except requests.exceptions.ConnectionError as exc:
+    except requests.exceptions.RequestException as exc:
         raise ValueError(_build_connection_hint(base_url)) from exc
     if response.status_code == 404:
         raise ValueError(_build_not_found_hint(base_url, date_range))
