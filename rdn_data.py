@@ -93,7 +93,7 @@ def _extract_records(payload: object) -> Iterable[dict]:
 
 
 def _build_not_found_hint(base_url: str, date_range: DateRange) -> str:
-    if "getcsv" in base_url or "pse.pl/getcsv" in base_url:
+    if "/getcsv/" in base_url:
         return (
             "PSE zwróciło błąd 404 dla legacy endpointu CSV. Ten adres został "
             "wycofany lub zakres dat jest niedostępny (np. obejmuje przyszłość). "
