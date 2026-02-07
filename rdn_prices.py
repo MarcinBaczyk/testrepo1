@@ -49,7 +49,7 @@ def main() -> None:
         date_range = resolve_date_range(args.days)
         raw_df = fetch_pse_prices(date_range, base_url=args.pse_url)
         prices = normalize_prices(raw_df, date_range)
-        average = plot_prices(prices, args.output, show=args.show)
+        average = plot_prices(prices, args.output, days=args.days, show=args.show)
     except Exception as exc:  # noqa: BLE001 - user-facing error handling
         print(f"Błąd podczas pobierania lub przetwarzania danych: {exc}", file=sys.stderr)
         sys.exit(1)

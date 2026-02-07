@@ -6,7 +6,13 @@ import seaborn as sns
 import pandas as pd
 
 
-def plot_prices(prices: pd.DataFrame, output_path: str, show: bool = False) -> float:
+def plot_prices(
+    prices: pd.DataFrame,
+    output_path: str,
+    *,
+    days: int | None = None,
+    show: bool = False,
+) -> float:
     """Render the line chart and return the average price for reporting."""
 
     sns.set_theme(style="whitegrid")
@@ -22,7 +28,10 @@ def plot_prices(prices: pd.DataFrame, output_path: str, show: bool = False) -> f
         label=f"Średnia: {average_price:.2f} PLN/MWh",
     )
 
-    ax.set_title("RDN - ceny energii elektrycznej (ostatnie 30 dni)")
+    if days:
+        ax.set_title(f"RDN - ceny energii elektrycznej (ostatnie {days} dni)")
+    else:
+        ax.set_title("RDN - ceny energii elektrycznej (ostatni okres)")
     ax.set_xlabel("Data")
     ax.set_ylabel("Cena [PLN/MWh]")
     ax.grid(True, linestyle="--", alpha=0.5)
