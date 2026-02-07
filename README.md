@@ -10,6 +10,14 @@ Domyślnie używany jest endpoint API PSE dla RDN:
 Jeśli API zmieni adres lub wymaga innego endpointu, użyj parametru `--pse-url`
 (albo zmiennej środowiskowej `PSE_DAM_URL`).
 
+### Typowy błąd 404
+
+Jeśli widzisz błąd podobny do:
+`https://www.pse.pl/getcsv/-/export/csv/PL_RDN/data/YYYYMMDD/YYYYMMDD`,
+oznacza to, że używany jest legacy endpoint CSV (często już niedostępny) lub
+zakres dat obejmuje przyszłość. W takiej sytuacji użyj oficjalnego API PSE
+podanego powyżej i upewnij się, że daty mieszczą się w dostępnej historii.
+
 ## Uruchomienie
 
 ```bash

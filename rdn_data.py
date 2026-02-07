@@ -40,6 +40,8 @@ def fetch_pse_prices(date_range: DateRange, base_url: str = DEFAULT_PSE_URL) -> 
         "dateTo": date_range.end.isoformat(),
     }
     response = requests.get(base_url, params=params, timeout=DEFAULT_TIMEOUT)
+    if response.status_code == 404:
+        raise ValueError(_build_not_found_hint(base_url, date_range))
     response.raise_for_status()
 
     content_type = response.headers.get("Content-Type", "")
@@ -88,6 +90,21 @@ def _extract_records(payload: object) -> Iterable[dict]:
             if key in payload and isinstance(payload[key], list):
                 return payload[key]
     raise ValueError("Unexpected JSON format returned from PSE API.")
+
+
+def _build_not_found_hint(base_url: str, date_range: DateRange) -> str:
+    if "getcsv" in base_url or "pse.pl/getcsv" in base_url:
+        return (
+            "PSE zwróciło błąd 404 dla legacy endpointu CSV. Ten adres został "
+            "wycofany lub zakres dat jest niedostępny (np. obejmuje przyszłość). "
+            "Użyj oficjalnego API https://api.pse.pl/api/market-data/price-dam "
+            "albo wybierz dostępny zakres danych."
+        )
+    return (
+        "PSE API zwróciło błąd 404. Sprawdź, czy podany zakres dat "
+        f"({date_range.start.isoformat()} - {date_range.end.isoformat()}) "
+        "jest dostępny oraz czy używany jest poprawny endpoint."
+    )
 
 
 def _find_column(columns: Iterable[str], candidates: Iterable[str]) -> Optional[str]:
