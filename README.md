@@ -20,6 +20,12 @@ oznacza to, że używany jest legacy endpoint CSV (często już niedostępny) lu
 zakres dat obejmuje przyszłość. W takiej sytuacji użyj oficjalnego API PSE
 podanego powyżej i upewnij się, że daty mieszczą się w dostępnej historii.
 
+### Błąd NameResolution / DNS
+
+Jeśli pojawia się komunikat o `NameResolutionError` (nie można rozwiązać
+`api.pse.pl`), przyczyną jest brak dostępu do internetu, błędny DNS, VPN lub
+firewall blokujący połączenie. Sprawdź sieć lub spróbuj z innego środowiska.
+
 ## Uruchomienie
 
 ```bash

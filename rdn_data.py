@@ -39,7 +39,10 @@ def fetch_pse_prices(date_range: DateRange, base_url: str = DEFAULT_PSE_URL) -> 
         "dateFrom": date_range.start.isoformat(),
         "dateTo": date_range.end.isoformat(),
     }
-    response = requests.get(base_url, params=params, timeout=DEFAULT_TIMEOUT)
+    try:
+        response = requests.get(base_url, params=params, timeout=DEFAULT_TIMEOUT)
+    except requests.exceptions.ConnectionError as exc:
+        raise ValueError(_build_connection_hint(base_url)) from exc
     if response.status_code == 404:
         raise ValueError(_build_not_found_hint(base_url, date_range))
     response.raise_for_status()
@@ -104,6 +107,15 @@ def _build_not_found_hint(base_url: str, date_range: DateRange) -> str:
         "PSE API zwróciło błąd 404. Sprawdź, czy podany zakres dat "
         f"({date_range.start.isoformat()} - {date_range.end.isoformat()}) "
         "jest dostępny oraz czy używany jest poprawny endpoint."
+    )
+
+
+def _build_connection_hint(base_url: str) -> str:
+    return (
+        "Nie udało się nawiązać połączenia z API PSE (problem z DNS lub siecią). "
+        "Sprawdź połączenie internetowe, ustawienia DNS/VPN/firewalla "
+        "oraz czy host jest osiągalny. Używany endpoint: "
+        f"{base_url}."
     )
 
 
